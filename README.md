@@ -4,6 +4,16 @@ Plantilla de currículum vitae profesional, moderna y optimizada para sistemas A
 
 ---
 
+## Vista previa
+
+<p align="center">
+  <img src="preview/page-1.png" alt="Vista previa - Página 1" width="49%">
+  &nbsp;
+  <img src="preview/page-2.png" alt="Vista previa - Página 2" width="49%">
+</p>
+
+---
+
 ## Características principales
 
 - **Tipografía auténtica**: Emplea **Helvetica Neue** directamente desde archivos OpenType (`.otf`) para lograr la estética tipográfica corporativa moderna.
@@ -26,9 +36,13 @@ Para compilar este documento se requieren las siguientes herramientas:
 > **¿Por qué es obligatorio LuaLaTeX?**
 > A diferencia de documentos tradicionales de LaTeX que emplean tipografías emuladas mediante Type 1 con `pdflatex`, esta plantilla utiliza `fontspec` para cargar directamente los archivos vectoriales de **Helvetica Neue** (`fonts/HelveticaNeue-*.otf`). `pdflatex` no cuenta con soporte nativo para OpenType y arrojará un error fatal si se intenta compilar con él.
 
+> [!WARNING]
+> **Entorno recomendado para Windows**:
+> Se recomienda encarecidamente utilizar un entorno **Linux nativo** o **WSL 2** (Windows Subsystem for Linux, ej. con Ubuntu). Herramientas como `make`, `pdftoppm` y el manejo de rutas de LuaLaTeX están diseñadas para entornos Unix y funcionan de forma inmediata bajo WSL. Si estás en Windows, puedes instalar WSL ejecutando `wsl --install` en PowerShell y seguir los pasos de Ubuntu / Debian.
+
 ### Instalación de dependencias
 
-#### En distribuciones basadas en Ubuntu / Debian:
+#### En distribuciones basadas en Ubuntu / Debian (o Windows con WSL):
 ```bash
 sudo apt update
 sudo apt install texlive-latex-base texlive-latex-extra texlive-luatex texlive-lang-spanish poppler-utils make
@@ -65,7 +79,7 @@ Es la vía más rápida, sencilla y determinista.
   make
   ```
 
-- **Compilar y generar vistas previas**: Compila el PDF y genera capturas PNG de cada página en `build/preview/`:
+- **Compilar y generar vistas previas**: Compila el PDF y genera capturas PNG de cada página en `preview/`:
   ```bash
   make preview
   ```
@@ -140,6 +154,9 @@ Si prefieres que el editor utilice siempre LuaLaTeX y dirija la salida a la carp
 │   ├── HelveticaNeue-Bold.otf
 │   ├── HelveticaNeue-Medium.otf
 │   └── HelveticaNeue-RegularItalic.otf
+├── preview/        # Vistas previas en formato PNG para visualización en GitHub
+│   ├── page-1.png
+│   └── page-2.png
 └── README.md       # Documentación general del repositorio
 ```
 
@@ -229,6 +246,6 @@ Para definir un cargo o titulación se utiliza `\cventry` y viñetas `\cvitem`:
 ## Control de versiones y publicación en GitHub
 
 El archivo [`.gitignore`](.gitignore) está configurado para que al publicar el proyecto en un repositorio público o privado de GitHub:
-- Queden excluidos todos los archivos compilados temporales y carpetas de salida (`build/` y `preview/`).
+- Queden excluidos todos los archivos compilados temporales y carpetas de salida (`build/`).
 - Queden excluidos borradores anteriores (`cv_old/`) o currículums de ejemplo (`examples/`).
-- El repositorio conserve únicamente los archivos de plantilla limpios, fuentes y documentación.
+- El repositorio conserve únicamente los archivos de plantilla limpios, fuentes, vistas previas y documentación.

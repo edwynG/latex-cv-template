@@ -1,6 +1,6 @@
 CV_NAME = cv
 BUILD_DIR = build
-PREVIEW_DIR = $(BUILD_DIR)/preview
+PREVIEW_DIR = preview
 
 all: pdf
 
@@ -20,6 +20,5 @@ preview: pdf
 clean:
 	rm -rf $(BUILD_DIR)
 	rm -f $(CV_NAME).aux $(CV_NAME).log $(CV_NAME).out $(CV_NAME).fls $(CV_NAME).fdb_latexmk $(CV_NAME).synctex.gz $(CV_NAME).pdf
-	rm -rf preview
 
 .PHONY: all pdf preview clean
