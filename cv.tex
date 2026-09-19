@@ -1,0 +1,204 @@
+\documentclass[10pt,a4paper]{article}
+
+% ==============================================================================
+% PAQUETES DE CODIFICACIÓN Y TIPOGRAFÍA
+% ==============================================================================
+\usepackage{fontspec}
+\setmainfont{HelveticaNeue}[
+  Path = ./fonts/,
+  Extension = .otf,
+  UprightFont = *-Regular,
+  BoldFont = *-Bold,
+  ItalicFont = *-RegularItalic
+]
+
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage[a4paper, left=1.5cm, right=1.5cm, top=1.5cm, bottom=1.5cm]{geometry}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\linespread{1.16}
+
+% ==============================================================================
+% 1. CONFIGURACIÓN DE COLORES
+% (Puedes cambiar los códigos hexadecimales aquí si deseas ajustar la paleta)
+% ==============================================================================
+\definecolor{accent}{HTML}{0051A3}       % Azul corporativo (títulos de sección, nombres de empresas)
+\definecolor{dotaccent}{HTML}{0071E3}    % Azul vibrante (punto del nombre, enlaces)
+\definecolor{textdark}{HTML}{1D1D1F}     % Grafito oscuro principal (fidelidad Apple)
+\definecolor{subtext}{HTML}{46464E}      % Gris intermedio (cargo, subtítulo)
+\definecolor{subsecondary}{HTML}{6E6E73} % Gris secundario (fechas, modalidades, separadores)
+\definecolor{linecolor}{HTML}{DCDFE4}    % Gris tenue (líneas divisorias de secciones)
+
+% ==============================================================================
+% 2. CONFIGURACIÓN DE ESPACIOS (Ajusta estos valores para cambiar las distancias)
+% ==============================================================================
+\newlength{\SpaceAboveSection}
+\setlength{\SpaceAboveSection}{0.48cm}         % Espacio antes de cada sección
+
+\newlength{\SpaceSectionTextToLine}
+\setlength{\SpaceSectionTextToLine}{0.28cm}    % Separación equilibrada entre el título y la línea divisoria
+
+\newlength{\SpaceSectionLineToContent}
+\setlength{\SpaceSectionLineToContent}{0.28cm} % Separación entre la línea divisoria y el contenido
+
+\newlength{\SpaceBetweenJobs}
+\setlength{\SpaceBetweenJobs}{0.34cm}          % Espacio entre diferentes empleos/experiencias
+
+\newlength{\SpaceJobTitleToSub}
+\setlength{\SpaceJobTitleToSub}{0.08cm}        % Espacio entre cargo/empresa y ubicación/modalidad
+
+\newlength{\SpaceJobSubToItems}
+\setlength{\SpaceJobSubToItems}{0.20cm}        % Espacio entre ubicación/modalidad y la primera viñeta
+
+\newlength{\SpaceBetweenItems}
+\setlength{\SpaceBetweenItems}{0.20cm}         % Espacio vertical entre viñetas individuales
+
+% ==============================================================================
+% 3. DATOS PERSONALES (Modifica fácilmente tus datos aquí)
+% ==============================================================================
+\newcommand{\cvName}{Edwyn Guzmán}
+\newcommand{\cvRole}{Desarrollador full-stack y DevOps \textbar\ React.js · Laravel · React Native · Docker · GitHub Actions}
+\newcommand{\cvLocation}{Caracas, Venezuela (trabajo remoto)}
+\newcommand{\cvPhone}{+58 424 154 3777}
+\newcommand{\cvPhoneLink}{+584241543777}
+\newcommand{\cvEmail}{edwynjesus30@gmail.com}
+\newcommand{\cvLinkedInUser}{linkedin.com/in/edwyn-guzman-95324632b}
+\newcommand{\cvLinkedInLink}{https://linkedin.com/in/edwyn-guzman-95324632b}
+\newcommand{\cvGitHubUser}{github.com/edwynG}
+\newcommand{\cvGitHubLink}{https://github.com/edwynG}
+
+% ==============================================================================
+% 4. MACROS REUTILIZABLES (Comandos para estructurar el contenido)
+% ==============================================================================
+\newcommand{\cvdot}{\textcolor{subsecondary}{~·~}}
+
+% Encabezado del CV
+\newcommand{\makecvheader}{%
+  {\fontsize{24pt}{29pt}\bfseries \cvName{\color{dotaccent}.}}\par\vspace{0.26cm}%
+  {\fontsize{10.2pt}{14.5pt}\color{subtext}\selectfont \cvRole}\par\vspace{0.22cm}%
+  {\fontsize{9.4pt}{13.5pt}\color{subsecondary}\selectfont \cvLocation\cvdot\href{tel:\cvPhoneLink}{\color{subsecondary}\cvPhone}\cvdot\href{mailto:\cvEmail}{\color{dotaccent}\cvEmail}}\par\vspace{0.10cm}%
+  {\fontsize{9.4pt}{13.5pt}\color{subsecondary}\selectfont LinkedIn: \href{\cvLinkedInLink}{\color{subsecondary}\cvLinkedInUser}\cvdot GitHub: \href{\cvGitHubLink}{\color{subsecondary}\cvGitHubUser}}\par%
+}
+
+% Encabezado de sección con tracking y línea divisoria con separación equilibrada
+\newcommand{\cvsection}[1]{%
+  \vspace{\SpaceAboveSection}%
+  {\color{accent}\bfseries\fontsize{10.2pt}{12pt}\addfontfeatures{LetterSpace=9.0}\selectfont #1}\par\nopagebreak%
+  \vspace{\SpaceSectionTextToLine}%
+  {\color{linecolor}\hrule height 0.65pt width \linewidth}\par\nopagebreak%
+  \vspace{\SpaceSectionLineToContent}%
+}
+
+% Entrada de trabajo o educación:
+% Uso: \cventry{Cargo}{Empresa o Institución}{Ubicación · Modalidad}{Fechas}
+\newcommand{\cventry}[4]{%
+  {\fontsize{9.8pt}{13.5pt}\selectfont{\bfseries #1}\cvdot{\color{accent}\bfseries #2} \hfill {\color{subsecondary}\small #4}}\par%
+  \vspace{\SpaceJobTitleToSub}%
+  {\color{subsecondary}\small #3}\par%
+  \vspace{\SpaceJobSubToItems}%
+}
+
+% Viñeta individual de logro o responsabilidad
+% Uso: \cvitem{Texto del logro...}
+\newcommand{\cvitem}[1]{%
+  \par\hangindent=1.2em\hangafter=1\noindent
+  \hbox to 1.2em{\raisebox{0.05ex}{\small\textbullet}\hss}%
+  {\fontsize{9.6pt}{14.5pt}\selectfont #1}\par%
+  \vspace{\SpaceBetweenItems}%
+}
+
+% Separación entre bloques de empleo
+\newcommand{\jobsep}{\vspace{\SpaceBetweenJobs}}
+
+% Fila de habilidades técnicas
+% Uso: \cvskill{Categoría}{Herramientas...}
+\newcommand{\cvskill}[2]{%
+  {\fontsize{9.6pt}{15.2pt}\selectfont \textbf{#1:} #2}\par\vspace{0.14cm}%
+}
+
+% ==============================================================================
+% CUERPO DEL DOCUMENTO
+% ==============================================================================
+\begin{document}
+\color{textdark}
+
+% ==============================================================================
+% PÁGINA 1
+% ==============================================================================
+
+\makecvheader
+
+% --- RESUMEN PROFESIONAL ---
+\cvsection{RESUMEN PROFESIONAL}
+
+{\fontsize{9.6pt}{14.8pt}\selectfont
+  Desarrollador full-stack y DevOps, estudiante de licenciatura en computación en la Universidad Central de Venezuela y preparador universitario. Experiencia construyendo aplicaciones web y móviles en producción, diseño de APIs robustas y automatización de infraestructura. Especializado en React.js, Next.js, React Native, y Laravel, con sólida práctica en containerización con Docker, despliegue continuo mediante GitHub Actions y migraciones de sistemas hacia servidores locales y VPS. Base matemática y algorítmica aplicada a la optimización de código, gestión eficiente de bases de datos y fundamentos de aprendizaje automático.
+}\par
+
+% --- EXPERIENCIA PROFESIONAL ---
+\cvsection{EXPERIENCIA PROFESIONAL}
+
+\cventry{Desarrollador full-stack y DevOps}{GanaderaSoft}{Venezuela · Remoto · Proyecto de investigación UCV · FONACIT / MINCYT}{Noviembre 2025 – Septiembre 2026}
+\cvitem{Desarrollo e implementación de la plataforma web integral para sistematizar y automatizar datos productivos en ganadería vacuna.}
+\cvitem{Construcción full-stack de interfaces responsivas y servicios backend para procesamiento de datos ganaderos.}
+\cvitem{Arquitectura y containerización de la suite de servicios mediante Docker.}
+\cvitem{Implementación de canalizaciones de integración y despliegue continuo (CI/CD) para despliegues automatizados en VPS.}
+
+\jobsep
+
+\cventry{Consultor DevOps y cloud}{Gipsycorp}{Venezuela · Remoto · Consultoría por proyecto}{Marzo 2026 – Julio 2026}
+\cvitem{Migración integral de infraestructura y servicios corporativos desde Microsoft Azure hacia entorno VPS on-premise.}
+\cvitem{Containerización y orquestación de la arquitectura de servicios mediante Docker.}
+\cvitem{Automatización de canalizaciones de despliegue continuo (CD) mediante GitHub Actions hacia el VPS on-premise.}
+\cvitem{Configuración y securización de la capa perimetral web con Azure Front Door para aceleración, protección WAF y balanceo de tráfico.}
+
+\jobsep
+
+\cventry{Auxiliar docente}{Universidad Central de Venezuela (UCV)}{Caracas, Venezuela · Presencial · Laboratorios docentes de computación}{Julio 2025 – Presente}
+\cvitem{Docencia y orientación académica a estudiantes de licenciatura en computación en la materia de probabilidad y estadística y prácticas de programación.}
+\cvitem{Acompañamiento técnico en algoritmia, resolución de ejercicios prácticos, buenas prácticas y entornos de desarrollo.}
+
+\jobsep
+
+\cventry{Operador telefónico JR de ATC}{Inversiones DRC S.A}{Caracas, Venezuela · Presencial}{Septiembre 2022 – Enero 2023}
+\cvitem{Soporte y atención al cliente, gestión ágil de incidencias y cumplimiento de métricas de calidad de servicio.}
+
+% ==============================================================================
+% PÁGINA 2
+% ==============================================================================
+\newpage
+
+% --- EDUCACIÓN ---
+\cvsection{EDUCACIÓN}
+
+\cventry{Licenciatura en computación}{Universidad Central de Venezuela (UCV)}{Caracas, Venezuela}{Enero 2023 – Presente}
+
+% --- CURSOS ---
+\cvsection{CURSOS}
+
+\cvitem{\textbf{Machine learning y deep learning}: Análisis y preparación de datos, entrenamiento de modelos predictivos tradicionales y desarrollo de arquitecturas neuronales aplicadas (Facultad de Ciencias, UCV).}
+\cvitem{\textbf{Bases de datos relacionales}: Diseño y modelado relacional, lenguaje SQL, normalización e integridad de datos (Facultad de Ciencias, UCV).}
+\cvitem{\textbf{Programación con Python}: Creación de aplicaciones web interactivas con frameworks como Flask (abril 2022).}
+\cvitem{\textbf{Git y GitHub}: Control de versiones, ramas, trabajo colaborativo y flujos de trabajo en equipo (julio 2021).}
+\cvitem{\textbf{Desarrollo web}: Construcción de interfaces web dinámicas y adaptativas con HTML, CSS, JavaScript y Next.js (febrero 2021).}
+
+% --- HABILIDADES TÉCNICAS ---
+\cvsection{HABILIDADES TÉCNICAS}
+
+\cvskill{Desarrollo web y móvil}{React.js, Next.js, React Native, Astro.js, Tailwind CSS, HTML5, CSS3.}
+\cvskill{Backend y frameworks}{Express.js, NestJS, Django, Flask, Laravel, Node.js, APIs REST, GraphQL.}
+\cvskill{DevOps e infraestructura}{Docker, Docker Compose, GitHub Actions (CI/CD), Microsoft Azure, Azure Front Door, VPS, Linux / Bash, Nginx.}
+\cvskill{Datos e inteligencia artificial}{Machine learning, Deep learning, SQL, PostgreSQL, MySQL, SQLite.}
+\cvskill{Lenguajes de programación}{JavaScript, TypeScript, Python, PHP, Java, C/C++, SQL.}
+\cvskill{Herramientas y metodologías}{Git, GitHub, metodologías ágiles (Scrum).}
+
+% --- IDIOMAS ---
+\cvsection{IDIOMAS}
+
+{\fontsize{9.6pt}{14.5pt}\selectfont Español (nativo)\cvdot Inglés (básico, lectura y comprensión técnica)}\par
+
+\end{document}

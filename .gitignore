@@ -1,0 +1,26 @@
+# Directorio de compilación y salida (todos los artefactos compilados)
+build/
+preview/
+
+# Archivos auxiliares de LaTeX (por si se compila manualmente en raíz)
+*.aux
+*.log
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.pdf
+
+# Archivos de referencia y versiones antiguas (excluidos para GitHub)
+cv_old/
+examples/
+
+# Archivos del sistema y editores
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
